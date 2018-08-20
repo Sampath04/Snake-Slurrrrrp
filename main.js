@@ -1,8 +1,4 @@
 var canvas = document.querySelector('canvas');
-var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame ||
-                            window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
-var cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
 canvas.width = 900;
 canvas.height = 900;
 
@@ -11,18 +7,15 @@ var c = canvas.getContext('2d');
 var hx = 90;
 var hy = 90;
 var wx = 30;
-var hdx = 90;
-var mSpeed = 300; 
-var fpsID;
+var hdx = 30;
+var mSpeed = 100; 
+let fpsID;
 
 //Running Time
 function move(){
 	var fx = hx + wx;
 	var sx = fx + wx;
 	var sTip = sx + wx;
-	setTimeout(function(){
-		fpsID = requestAnimationFrame(move);
-	}, mSpeed);
 	c.clearRect(0, 0, canvas.width, canvas.height);
 	//Baby Snake
 	c.beginPath();
@@ -35,13 +28,11 @@ function move(){
 	c.strokeRect(fx,hy,30,30);
 	c.strokeRect(sx,hy,30,30);
 	hx += hdx;
-	console.log(sTip);
-	console.log(canvas);
 	if(sTip > canvas.width){
-		cancelAnimationFrame(fpsID);
-		fpsID = null;
+		clearInterval(fpsID);
+		alert("Game Over!!");
 	}
 }
 
-// fpsID = requestAnimationFrame(move);
-move();
+fpsID = setInterval(move, mSpeed);
+
